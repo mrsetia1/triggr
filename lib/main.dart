@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:triggr/fab.dart';
+import 'package:triggr/pages/add.dart';
+import 'package:triggr/containers/addButton.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,6 +10,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'triggr',
+      initialRoute: '/',
+      routes: {
+        '/add': (context) => AddPage()
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -30,54 +35,54 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    title = 'My triggrs';
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: new Stack(
-              fit: StackFit.expand,
-              children: <Widget>[_buildHeader(), _buildFab()],
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          // Box decoration takes a gradient
+          gradient: LinearGradient(
+            // Where the linear gradient begins and ends
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              // Colors are easy thanks to Flutter's Colors class.
+              Colors.tealAccent[100],
+              Colors.cyan[100]
+            ],
           ),
-        ],
+        ),
+        child: new Stack(
+          fit: StackFit.expand,
+          children: <Widget>[_buildFab()],
+        ),
       ),
     );
   }
 
   Widget _buildFab() {
     return new Positioned(
-        bottom: -90,
-        child: Center(
-          child: new AnimatedFab(
-            onClick: null,
-          ),
-        ));
+        bottom: -110,
+        width: MediaQuery.of(context).size.width,
+        child: new AddButton());
   }
 
-  Widget _buildHeader() {
-    return new Padding(
-      padding: new EdgeInsets.only(top: 20.0, left: 10),
-      child: new Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Text(
-            'my triggr',
-            style: new TextStyle(fontSize: 34.0),
-          ),
-          new Text(
-            'FEBRUARY 8, 2015',
-            style: new TextStyle(color: Colors.grey, fontSize: 12.0),
-          ),
-        ],
-      ),
-    );
-  }
+//  Widget _buildHeader() {
+//    return new Padding(
+//      padding: new EdgeInsets.only(top: 40.0, left: 20),
+//      child: new Column(
+//        crossAxisAlignment: CrossAxisAlignment.start,
+//        children: <Widget>[
+//          new Text(
+//            'Hello there?',
+//            style: new TextStyle(fontSize: 34.0),
+//          ),
+//        ],
+//      ),
+//    );
+//  }
 
 //  Widget _buildList() {
 //    return new Expanded(
