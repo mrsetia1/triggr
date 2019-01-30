@@ -12,10 +12,14 @@ class AddForm extends StatefulWidget {
 
 class _AddFormState extends State<AddForm> {
   final _formKey = GlobalKey<FormState>();
-  final textController = TextEditingController();
+  TextEditingController textController;
 
   @override
   void initState() {
+    textController = TextEditingController()
+      ..addListener(() {
+        setState(() {});
+      });
     super.initState();
   }
 
@@ -23,6 +27,10 @@ class _AddFormState extends State<AddForm> {
   void dispose() {
     textController.dispose();
     super.dispose();
+  }
+
+  void doStuff() {
+    textController.text = "OMG";
   }
 
   @override
@@ -38,14 +46,8 @@ class _AddFormState extends State<AddForm> {
                   controller: textController,
                 ),
                 BubbleButton(
-                  onClick: null,
+                  onClick: doStuff,
                 ),
-                new Text(
-                  textController.text,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )
               ]),
         ));
   }

@@ -11,12 +11,10 @@ class BubbleTextField extends StatelessWidget {
       controller: this.controller,
       decoration: new InputDecoration(
         labelText: "Enter Something",
-        fillColor: Colors.white,
         border: new OutlineInputBorder(
           borderRadius: new BorderRadius.circular(25.0),
           borderSide: new BorderSide(),
         ),
-        //fillColor: Colors.green
       ),
       validator: (val) {
         if (val.length == 0) {
@@ -27,6 +25,8 @@ class BubbleTextField extends StatelessWidget {
       },
       keyboardType: TextInputType.emailAddress,
       style: new TextStyle(
+        color: Colors.black,
+        fontSize: 20,
         fontFamily: "Poppins",
       ),
     );

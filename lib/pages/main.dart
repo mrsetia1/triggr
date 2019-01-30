@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:triggr/containers/addButton.dart';
+import 'package:triggr/components/addButton.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);

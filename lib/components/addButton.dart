@@ -3,9 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/animation.dart';
 
 class AddButton extends StatefulWidget {
-  final VoidCallback onClick;
 
-  const AddButton({Key key, this.onClick}) : super(key: key);
+  const AddButton({Key key}) : super(key: key);
 
   @override
   _AnimatedFabState createState() => new _AnimatedFabState();
@@ -105,10 +104,13 @@ class _AnimatedFabState extends State<AddButton>
                 child: AnimatedOpacity(
                   opacity: buttonZoomOutAnimation.value < 400 ? 1.0 : 0.0,
                   duration: Duration(milliseconds: 250),
-                  child: new Icon(
-                    Icons.add,
-                    size: 50,
-                    color: Colors.white70,
+                  child: FloatingActionButton(
+                    onPressed: null,
+                    child: new Icon(
+                      Icons.add,
+                      size: 50,
+                      color: Colors.white70,
+                    ),
                   ),
                 ),
               ),

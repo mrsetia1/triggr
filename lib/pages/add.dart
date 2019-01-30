@@ -21,6 +21,7 @@ class _AddPageState extends State<AddPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: Container(
+        color: Colors.lightBlue,
         child: new Stack(
           fit: StackFit.expand,
           children: <Widget>[
