@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:triggr/containers/addForm.dart';
-
-class AddPage extends StatefulWidget {
-  AddPage({Key key}) : super(key: key);
+class DetailPage extends StatefulWidget {
+  DetailPage({Key key}) : super(key: key);
 
   @override
-  _AddPageState createState() => _AddPageState();
+  _DetailPageState createState() => _DetailPageState();
 }
 
-class _AddPageState extends State<AddPage> {
+class _DetailPageState extends State<DetailPage> {
   String title;
 
   @override
@@ -24,7 +22,6 @@ class _AddPageState extends State<AddPage> {
         child: new Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            new AddForm()
           ],
         ),
       ),
