@@ -25,7 +25,7 @@ class _AddButtonState extends State<AddButton>
         AnimationController(vsync: this, duration: Duration(milliseconds: 750))
           ..addListener(() {
             if (_animationController.isCompleted) {
-//              Navigator.pushNamed(context, "/add");
+              Navigator.pushNamed(context, "/add");
             }
             setState(() {});
           });

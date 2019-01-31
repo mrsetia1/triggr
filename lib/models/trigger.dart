@@ -1,8 +1,9 @@
 import 'package:triggr/models/reason.dart';
 
 class Trigger {
-  String title;
-  List<Reason> reasons;
+  final String title;
+  final String content;
+  final List<Reason> reasons;
 
-  Trigger(this.title, this.reasons);
+  Trigger(this.title, this.content, this.reasons);
 }

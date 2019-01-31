@@ -42,7 +42,7 @@ class _DashButtonState extends State<DashButton>
     ).animate(buttonGrowAnimation);
 
     buttonZoomOutAnimation = new Tween(
-      begin: 150.0,
+      begin: 100.0,
       end: 1500.0,
     ).animate(buttonGrowAnimation);
 
