@@ -7,10 +7,10 @@ class AddButton extends StatefulWidget {
   const AddButton({Key key}) : super(key: key);
 
   @override
-  _AnimatedFabState createState() => new _AnimatedFabState();
+  _AddButtonState createState() => new _AddButtonState();
 }
 
-class _AnimatedFabState extends State<AddButton>
+class _AddButtonState extends State<AddButton>
     with SingleTickerProviderStateMixin {
   bool isOpened = false;
   AnimationController _animationController;
@@ -22,10 +22,10 @@ class _AnimatedFabState extends State<AddButton>
   @override
   void initState() {
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+        AnimationController(vsync: this, duration: Duration(milliseconds: 750))
           ..addListener(() {
             if (_animationController.isCompleted) {
-              Navigator.pushNamed(context, "/add");
+//              Navigator.pushNamed(context, "/add");
             }
             setState(() {});
           });
@@ -66,52 +66,32 @@ class _AnimatedFabState extends State<AddButton>
   @override
   Widget build(BuildContext context) {
     return new Container(
-        decoration: new BoxDecoration(
-            gradient: LinearGradient(
-              // Where the linear gradient begins and ends
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                // Colors are easy thanks to Flutter's Colors class.
-                Colors.lightBlueAccent[100],
-                Colors.lightBlue[100]
-              ],
-            ),
-            shape: buttonZoomOutAnimation.value < 400
-                ? BoxShape.circle
-                : BoxShape.rectangle),
         alignment: buttonBottomCenterAnimation.value,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: new GestureDetector(
-            onVerticalDragStart: (state) {
-              animate();
-            },
-            onTap: () {
-              animate();
-            },
-            child: new Container(
-              width: buttonZoomOutAnimation.value,
-              height: buttonZoomOutAnimation.value,
-              alignment: buttonBottomCenterAnimation.value,
-              decoration: new BoxDecoration(
-                  color: Colors.lightBlue,
-                  shape: buttonZoomOutAnimation.value < 400
-                      ? BoxShape.circle
-                      : BoxShape.rectangle),
-              child: Container(
-                alignment: Alignment.topCenter,
-                child: AnimatedOpacity(
-                  opacity: buttonZoomOutAnimation.value < 400 ? 1.0 : 0.0,
-                  duration: Duration(milliseconds: 250),
-                  child: FloatingActionButton(
-                    onPressed: null,
-                    child: new Icon(
-                      Icons.add,
-                      size: 50,
-                      color: Colors.white70,
-                    ),
-                  ),
+        child: new GestureDetector(
+          onVerticalDragStart: (state) {
+            animate();
+          },
+          onTap: () {
+            animate();
+          },
+          child: new Container(
+            width: buttonZoomOutAnimation.value,
+            height: buttonZoomOutAnimation.value,
+            alignment: buttonBottomCenterAnimation.value,
+            decoration: new BoxDecoration(
+                color: Colors.lightBlue,
+                shape: buttonZoomOutAnimation.value < 400
+                    ? BoxShape.circle
+                    : BoxShape.rectangle),
+            child: Container(
+              alignment: Alignment.topCenter,
+              child: AnimatedOpacity(
+                opacity: buttonZoomOutAnimation.value < 400 ? 1.0 : 0.0,
+                duration: Duration(milliseconds: 250),
+                child: new Icon(
+                  Icons.add,
+                  size: 50,
+                  color: Colors.white70,
                 ),
               ),
             ),
