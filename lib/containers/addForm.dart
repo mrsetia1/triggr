@@ -38,7 +38,7 @@ class _AddFormState extends State<AddForm> {
     return Form(
         key: _formKey,
         child: Padding(
-          padding: const EdgeInsets.all(40.0),
+          padding: const EdgeInsets.all(100.0),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[

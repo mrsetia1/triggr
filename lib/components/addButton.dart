@@ -3,8 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/animation.dart';
 
 class AddButton extends StatefulWidget {
+  final VoidCallback toggleAddForm;
 
-  const AddButton({Key key}) : super(key: key);
+  const AddButton({Key key, this.toggleAddForm}) : super(key: key);
 
   @override
   _AddButtonState createState() => new _AddButtonState();
@@ -25,7 +26,7 @@ class _AddButtonState extends State<AddButton>
         AnimationController(vsync: this, duration: Duration(milliseconds: 750))
           ..addListener(() {
             if (_animationController.isCompleted) {
-              Navigator.pushNamed(context, "/add");
+              widget.toggleAddForm();
             }
             setState(() {});
           });
@@ -58,6 +59,7 @@ class _AddButtonState extends State<AddButton>
     if (!isOpened) {
       _animationController.forward();
     } else {
+      widget.toggleAddForm();
       _animationController.reverse();
     }
     isOpened = !isOpened;

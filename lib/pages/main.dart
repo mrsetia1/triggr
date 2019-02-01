@@ -5,6 +5,7 @@ import 'package:triggr/components/header.dart';
 import 'package:triggr/models/trigger.dart';
 import 'package:triggr/models/reason.dart';
 import 'package:triggr/components/triggerList.dart';
+import 'package:triggr/containers/addForm.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -14,6 +15,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  bool showAdd = false;
   final triggers = List<Trigger>.generate(
     30,
     (i) => Trigger("I don't like $i", "Because it's scary", new List<Reason>()),
@@ -30,17 +32,34 @@ class _MainPageState extends State<MainPage> {
       body: Container(
         child: new Stack(
           fit: StackFit.expand,
-          children: <Widget>[_buildList(), _buildHeader(), _buildFab()],
+          children: <Widget>[_buildList(), _buildHeader(), _buildAdd()],
         ),
       ),
     );
   }
 
-  Widget _buildFab() {
+  Widget _buildAdd() {
     return new Positioned(
         bottom: -100,
         width: MediaQuery.of(context).size.width,
-        child: new AddButton());
+        child: new Stack(children: _getAddWidgets()));
+  }
+
+  List <Widget> _getAddWidgets(){
+    List<Widget> wArr = new List<Widget>();
+
+    wArr.add(AddButton(
+      toggleAddForm: () {
+        showAdd = !showAdd;
+        setState(() {});
+      },
+    ));
+
+    if (showAdd) {
+      wArr.add(new AddForm());
+    }
+
+    return wArr;
   }
 
   Widget _buildHeader() {
@@ -52,10 +71,7 @@ class _MainPageState extends State<MainPage> {
     return Positioned(
       top: 80,
       width: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20),
-        child:  new TriggerList(triggers: triggers),
-      ),
+      child: new TriggerList(triggers: triggers),
     );
   }
 }

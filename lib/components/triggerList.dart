@@ -13,6 +13,8 @@ class TriggerList extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height - 60,
       child: ListView.builder(
+        padding: EdgeInsets.only(top: 20, left: 20, bottom: 80),
+        itemExtent: 80.0,
         // Let the ListView know how many items it needs to build
         itemCount: triggers.length,
         // Provide a builder function. This is where the magic happens! We'll
