@@ -4,7 +4,7 @@ import 'package:triggr/components/addButton.dart';
 import 'package:triggr/components/header.dart';
 import 'package:triggr/models/trigger.dart';
 import 'package:triggr/models/reason.dart';
-import 'package:triggr/components/triggerList.dart';
+import 'package:triggr/containers/triggerList.dart';
 import 'package:triggr/containers/addForm.dart';
 
 class MainPage extends StatefulWidget {
@@ -40,9 +40,8 @@ class _MainPageState extends State<MainPage> {
     return new Stack(children: _getAddWidgets());
   }
 
-  addNewItem(String value) {
+  closeForm() {
     setState(() {
-      _triggers.add(new Trigger(value, "I was just added", new List<Reason>()));
       _showAddForm = !_showAddForm;
       _isFinished = true;
     });
@@ -66,9 +65,7 @@ class _MainPageState extends State<MainPage> {
     ));
 
     if (_showAddForm) {
-      wArr.add(new AddForm(onAdd: (value) {
-        addNewItem(value);
-      }));
+      wArr.add(new AddForm(closeForm: closeForm));
     }
 
     return wArr;
@@ -83,7 +80,7 @@ class _MainPageState extends State<MainPage> {
     return Positioned(
       top: 80,
       width: MediaQuery.of(context).size.width,
-      child: new TriggerList(triggers: _triggers),
+      child: new TriggerListContainer(),
     );
   }
 }
