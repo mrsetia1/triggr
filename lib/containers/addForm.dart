@@ -10,11 +10,10 @@ import 'package:triggr/components/bubbleHeader.dart';
 import 'package:triggr/models/triggerState.dart';
 
 class _ViewModel {
-  final VoidCallback onAddPressed;
+  final VoidCallback addTrigger;
+  final VoidCallback addReason;
 
-  _ViewModel({
-    @required this.onAddPressed,
-  });
+  _ViewModel({@required this.addTrigger, @required this.addReason});
 }
 
 class AddForm extends StatefulWidget {
@@ -29,9 +28,13 @@ class AddForm extends StatefulWidget {
 class _AddFormState extends State<AddForm> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController textController;
+  TextEditingController reasonTextController;
+  int _currentStep;
 
   @override
   void initState() {
+    _currentStep = 0;
+
     textController = TextEditingController()
       ..addListener(() {
         setState(() {});
@@ -49,31 +52,66 @@ class _AddFormState extends State<AddForm> {
   Widget build(BuildContext context) {
     return new StoreConnector<TriggerState, _ViewModel>(
         converter: (store) => new _ViewModel(
-            onAddPressed: () => store.dispatch(
-                new AddTriggerAction(textController.text)
-            )),
-        builder: (context, viewModel) =>
-        new Form(
+            addReason: () => store.dispatch(new AddTriggerReasonAction(
+                store.state.activeTrigger.id, reasonTextController.text)),
+            addTrigger: () =>
+                store.dispatch(new AddTriggerAction(textController.text))),
+        builder: (context, viewModel) => new Form(
             key: _formKey,
             child: Padding(
               padding: const EdgeInsets.only(top: 100.0, left: 40, right: 40),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    BubbleHeader(text: "What's up?"),
-                    BubbleTextField(
-                      controller: textController,
-                    ),
-                    BubbleButton(
-                      text: "Ok",
-                      isDisabled: textController.text.isEmpty,
-                      onClick: () {
-                        viewModel.onAddPressed();
-                        widget.closeForm();
-                      },
-                    ),
-                  ]),
-            ))
+              child: new Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  _addTriggerStep(viewModel),
+                  _addReasonsStep(viewModel)
+                ],
+              ),
+            )));
+  }
+
+  Widget _addTriggerStep(_ViewModel viewModel) {
+    return AnimatedOpacity(
+      opacity: _currentStep == 0 ? 1.0 : 0.0,
+      duration: Duration(milliseconds: 500),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            BubbleHeader(text: "What's up?"),
+            BubbleTextField(
+              controller: textController,
+            ),
+            BubbleButton(
+              text: "Next",
+              isDisabled: textController.text.isEmpty,
+              onClick: () {
+                viewModel.addTrigger();
+                _currentStep = 1;
+              },
+            ),
+          ]),
+    );
+  }
+
+  Widget _addReasonsStep(_ViewModel viewModel) {
+    return AnimatedOpacity(
+      opacity: _currentStep == 1 ? 1.0 : 0.0,
+      duration: Duration(milliseconds: 500),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            BubbleHeader(text: "What might happen?"),
+            BubbleTextField(
+              controller: reasonTextController,
+            ),
+            BubbleButton(
+              text: "Ok",
+              isDisabled: textController.text.isEmpty,
+              onClick: () {
+                viewModel.addReason();
+              },
+            ),
+          ]),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:triggr/models/trigger.dart';
+import 'package:triggr/pages/detail.dart';
 
 @immutable
 class TriggerList extends StatelessWidget {
@@ -20,9 +21,16 @@ class TriggerList extends StatelessWidget {
         // Provide a builder function. This is where the magic happens! We'll
         // convert each item into a Widget based on the type of item it is.
         itemBuilder: (context, index) {
-          final item = triggers[index];
+          final trigger = triggers[index];
           return ListTile(
-              title: Text(item.title), subtitle: Text(item.content));
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailPage(trigger: trigger)));
+              },
+              title: Text(trigger.title),
+              subtitle: Text(trigger.content));
         },
       ),
     );
