@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:triggr/components/bubbleButton.dart';
 import 'package:triggr/components/bubbleTextField.dart';
+import 'package:triggr/components/bubbleHeader.dart';
 
 class AddForm extends StatefulWidget {
-  const AddForm({Key key}) : super(key: key);
+  final Function(String) onAdd;
+
+  const AddForm({Key key, this.onAdd}) : super(key: key);
 
   @override
   _AddFormState createState() => new _AddFormState();
@@ -18,7 +21,7 @@ class _AddFormState extends State<AddForm> {
   void initState() {
     textController = TextEditingController()
       ..addListener(() {
-        setState(() {});
+        setState(() { });
       });
     super.initState();
   }
@@ -29,24 +32,25 @@ class _AddFormState extends State<AddForm> {
     super.dispose();
   }
 
-  void doStuff() {
-    textController.text = "OMG";
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
         child: Padding(
-          padding: const EdgeInsets.all(100.0),
+          padding: const EdgeInsets.only(top: 100.0, left: 40, right: 40),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                BubbleHeader(text: "What's up?"),
                 BubbleTextField(
                   controller: textController,
                 ),
                 BubbleButton(
-                  onClick: doStuff,
+                  text: "Ok",
+                  isDisabled: textController.text.isEmpty,
+                  onClick: () {
+                    widget.onAdd(textController.text);
+                  },
                 ),
               ]),
         ));

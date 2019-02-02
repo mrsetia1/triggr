@@ -2,32 +2,24 @@ import 'package:flutter/material.dart';
 
 class BubbleTextField extends StatelessWidget {
   final TextEditingController controller;
+  final String label;
 
-  const BubbleTextField({Key key, this.controller}) : super(key: key);
+  const BubbleTextField({Key key, this.label, this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return new TextFormField(
+    return new TextField(
+      autofocus: true,
       controller: this.controller,
       decoration: new InputDecoration(
-        labelText: "Enter Something",
-        border: new OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(25.0),
-          borderSide: new BorderSide(),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.white),
         ),
+        labelText: label,
       ),
-      validator: (val) {
-        if (val.length == 0) {
-          return "Cannot be empty";
-        } else {
-          return null;
-        }
-      },
-      keyboardType: TextInputType.emailAddress,
       style: new TextStyle(
-        color: Colors.black,
-        fontSize: 20,
-        fontFamily: "Poppins",
+        color: Colors.white,
+        fontSize: 20
       ),
     );
   }

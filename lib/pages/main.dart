@@ -15,11 +15,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  bool showAdd = false;
-  final triggers = List<Trigger>.generate(
-    30,
-    (i) => Trigger("I don't like $i", "Because it's scary", new List<Reason>()),
-  );
+  bool _showAddForm = false;
+  bool _isFinished = false;
+  final _triggers = List<Trigger>();
 
   @override
   void initState() {
@@ -39,24 +37,38 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget _buildAdd() {
-    return new Positioned(
-        bottom: -100,
-        width: MediaQuery.of(context).size.width,
-        child: new Stack(children: _getAddWidgets()));
+    return new Stack(children: _getAddWidgets());
   }
 
-  List <Widget> _getAddWidgets(){
+  addNewItem(String value) {
+    setState(() {
+      _triggers.add(new Trigger(value, "I was just added", new List<Reason>()));
+      _showAddForm = !_showAddForm;
+      _isFinished = true;
+    });
+  }
+
+  List<Widget> _getAddWidgets() {
     List<Widget> wArr = new List<Widget>();
 
-    wArr.add(AddButton(
-      toggleAddForm: () {
-        showAdd = !showAdd;
-        setState(() {});
-      },
+    wArr.add(Positioned(
+      width: MediaQuery.of(context).size.width,
+      bottom: -100,
+      child: AddButton(
+        isFinished: _isFinished,
+        toggleAddForm: () {
+          setState(() {
+            _isFinished = false;
+            _showAddForm = !_showAddForm;
+          });
+        },
+      ),
     ));
 
-    if (showAdd) {
-      wArr.add(new AddForm());
+    if (_showAddForm) {
+      wArr.add(new AddForm(onAdd: (value) {
+        addNewItem(value);
+      }));
     }
 
     return wArr;
@@ -71,7 +83,7 @@ class _MainPageState extends State<MainPage> {
     return Positioned(
       top: 80,
       width: MediaQuery.of(context).size.width,
-      child: new TriggerList(triggers: triggers),
+      child: new TriggerList(triggers: _triggers),
     );
   }
 }

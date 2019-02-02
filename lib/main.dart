@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:triggr/pages/add.dart';
 import 'package:triggr/pages/main.dart';
 import 'package:triggr/pages/detail.dart';
 
@@ -13,7 +12,6 @@ class MyApp extends StatelessWidget {
       title: 'triggr',
       initialRoute: '/',
       routes: {
-        '/add': (context) => AddPage(),
         '/detail': (context) => DetailPage()
       },
       theme: ThemeData(
