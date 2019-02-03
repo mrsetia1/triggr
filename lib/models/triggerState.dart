@@ -1,7 +1,5 @@
 import 'package:triggr/models/trigger.dart';
 
-import 'package:flutter/foundation.dart';
-
 class TriggerState {
   final List<Trigger> triggers;
   final Trigger activeTrigger;

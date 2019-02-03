@@ -55,7 +55,7 @@ class _AddFormState extends State<AddForm> {
             addReason: () => store.dispatch(new AddTriggerReasonAction(
                 store.state.activeTrigger.id, reasonTextController.text)),
             addTrigger: () =>
-                store.dispatch(new AddTriggerAction(textController.text))),
+                store.dispatch(new addTriggerAndStoreAction(textController.text))),
         builder: (context, viewModel) => new Form(
             key: _formKey,
             child: Padding(

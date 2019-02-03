@@ -7,7 +7,6 @@ import 'package:triggr/components/triggerList.dart';
 
 class _ViewModel {
   final List<Trigger> triggers;
-
   _ViewModel({this.triggers});
 }
 
@@ -15,7 +14,8 @@ class TriggerListContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<TriggerState, _ViewModel>(
-      converter: (store) => new _ViewModel(triggers: store.state.triggers),
+      converter: (store) => new _ViewModel(
+          triggers: store.state.triggers),
       builder: (context, viewModel) =>
           new TriggerList(triggers: viewModel.triggers),
     );

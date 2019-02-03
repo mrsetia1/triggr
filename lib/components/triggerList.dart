@@ -5,7 +5,8 @@ import 'package:triggr/pages/detail.dart';
 
 @immutable
 class TriggerList extends StatelessWidget {
-  const TriggerList({Key key, this.triggers}) : super(key: key);
+  const TriggerList({Key key, this.triggers})
+      : super(key: key);
 
   final List<Trigger> triggers;
 
