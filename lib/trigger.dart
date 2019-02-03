@@ -1,4 +1,3 @@
-import 'package:triggr/models/trigger.dart';
 import 'package:triggr/models/triggerState.dart';
 import 'package:triggr/pages/main.dart';
 import 'package:triggr/pages/detail.dart';
@@ -15,7 +14,7 @@ class TriggerApp extends StatelessWidget {
     return MaterialApp(
         title: 'triggr',
         initialRoute: '/',
-        routes: {'/detail': (context) => DetailPage()},
+        routes: {'/detail:/id': (context) => DetailPage()},
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

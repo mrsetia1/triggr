@@ -2,10 +2,23 @@ import 'package:triggr/models/reason.dart';
 import 'package:uuid/uuid.dart';
 
 class Trigger {
-  Uuid id;
+  String id;
   String title;
-  String content;
-  List<Reason> reasons;
+  List<Reason> reasons = new List<Reason>();
 
-  Trigger(this.id, this.title, this.content, this.reasons);
+  String getProgress () {
+    return (this.reasons.length / 2).toString();
+  }
+
+  Map<String, dynamic> toJson() =>
+      {
+        'id': id,
+        'title': title,
+      };
+
+  Trigger(this.id, this.title);
+
+  factory Trigger.fromJson(Map<String, dynamic> json) {
+    return Trigger(json['id'], json['title']);
+  }
 }

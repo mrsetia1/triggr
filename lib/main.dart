@@ -9,7 +9,7 @@ import 'package:triggr/trigger.dart';
 
 void main() {
   final store =
-      new Store<TriggerState>(triggerAppReducer, initialState: TriggerState.initialState());
+      new Store<TriggerState>(triggerReducer, initialState: TriggerState.initialState());
 
   runApp(new FlutterReduxApp(
     store: store,

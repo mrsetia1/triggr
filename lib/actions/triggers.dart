@@ -1,9 +1,17 @@
 import 'package:uuid/uuid.dart';
 
+import 'package:triggr/models/trigger.dart';
+
 abstract class TriggerAction {
   String toString() {
     return '$runtimeType';
   }
+}
+
+class SetTriggersAction extends TriggerAction {
+  List<Trigger> triggers;
+
+  SetTriggersAction(this.triggers);
 }
 
 class SetActiveTriggerAction extends TriggerAction {
@@ -32,7 +40,7 @@ class UpdateTriggerStateAction extends TriggerAction {
 }
 
 class AddTriggerReasonAction extends TriggerAction {
-  Uuid triggerId;
+  String triggerId;
   String reasonText;
 
   AddTriggerReasonAction(this.triggerId, this.reasonText);

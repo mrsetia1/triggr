@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mmkv/flutter_mmkv.dart';
+import 'dart:convert';
+import 'package:uuid/uuid.dart';
 
+import 'package:triggr/models/trigger.dart';
 import 'package:triggr/components/addButton.dart';
 import 'package:triggr/components/header.dart';
-import 'package:triggr/models/trigger.dart';
-import 'package:triggr/models/reason.dart';
 import 'package:triggr/containers/triggerList.dart';
 import 'package:triggr/containers/addForm.dart';
 
@@ -17,10 +19,52 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   bool _showAddForm = false;
   bool _isFinished = false;
-  final _triggers = List<Trigger>();
+  List<Trigger> storedTriggers;
+
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    String storedTriggersJSON;
+    List<Trigger> storedTriggers = new List<Trigger>();
+    List<Trigger> triggers;
+
+    var uuid = new Uuid();
+
+    Trigger trigger = new Trigger(uuid.v1().toString(), "stored");
+    Trigger trigger2 = new Trigger(uuid.v1().toString(), "also stored");
+
+    triggers = new List<Trigger>()..add(trigger);
+    triggers.add(trigger2);
+    
+    var encodedList = jsonEncode(triggers.map((t) => t.toJson()).toList());
+
+    FlutterMmkv.encodeString("mytriggers", encodedList);
+
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      storedTriggersJSON = await FlutterMmkv.decodeString("mytriggers");
+    } on Exception {
+       print('Failed to get local data.');
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    var storedTriggerList = jsonDecode(storedTriggersJSON).map((t) => Trigger.fromJson(t));
+
+    storedTriggerList.forEach((t) =>
+        storedTriggers.add(t)
+    );
+
+    print(storedTriggerList.toString());
+    print(storedTriggers.toString());
+  }
 
   @override
   void initState() {
+    initPlatformState();
     super.initState();
   }
 

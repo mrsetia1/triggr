@@ -4,26 +4,33 @@ import 'package:triggr/models/reason.dart';
 import 'package:triggr/models/triggerState.dart';
 import 'package:triggr/actions/triggers.dart';
 
-List<Trigger> triggerReducer(List<Trigger> state, dynamic action) {
+TriggerState triggerReducer(TriggerState state, dynamic action) {
   if (action is AddTriggerAction) {
-      return addTrigger(state, action);
+    return addTrigger(state, action);
   } else if (action is AddTriggerReasonAction) {
     return addReason(state, action);
+  } else if (action is SetTriggersAction) {
+    return setTriggers(state, action);
   }
   return state;
 }
 
-List<Trigger> addTrigger(List<Trigger> triggers, AddTriggerAction action) {
-  return List.from(triggers)
-    ..add(new Trigger(new Uuid(), action.text, action.text, new List<Reason>()));
+TriggerState addTrigger(TriggerState state, AddTriggerAction action) {
+  Trigger newTrigger =
+      new Trigger(new Uuid().v1(), action.text);
+  List<Trigger> triggers = List.from(state.triggers)..add(newTrigger);
+  return state.copyWith(triggers: triggers, activeTrigger: newTrigger);
 }
 
-List<Trigger> addReason(List<Trigger> triggers, AddTriggerReasonAction action) {
-  final trigger = triggers.firstWhere((trigger) => trigger.id == action.triggerId);
+TriggerState addReason(TriggerState state, AddTriggerReasonAction action) {
+  final trigger =
+      state.triggers.firstWhere((trigger) => trigger.id == action.triggerId);
   trigger.reasons.add(new Reason(action.reasonText, false));
-  return List.from(triggers);
+  return state;
 }
 
-TriggerState triggerAppReducer(TriggerState state, dynamic action) {
-  return new TriggerState(triggers: triggerReducer(state.triggers, action));
+TriggerState setTriggers(TriggerState state, SetTriggersAction action) {
+  return state.copyWith(
+    triggers: action.triggers
+  );
 }

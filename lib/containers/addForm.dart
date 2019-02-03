@@ -60,58 +60,62 @@ class _AddFormState extends State<AddForm> {
             key: _formKey,
             child: Padding(
               padding: const EdgeInsets.only(top: 100.0, left: 40, right: 40),
-              child: new Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  _addTriggerStep(viewModel),
-                  _addReasonsStep(viewModel)
-                ],
+              child: new AnimatedCrossFade(
+                duration: Duration(milliseconds: 500),
+                firstChild: _addTriggerStep(viewModel),
+                secondChild: _addReasonsStep(viewModel),
+                crossFadeState: _currentStep == 0
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
               ),
             )));
   }
 
   Widget _addTriggerStep(_ViewModel viewModel) {
-    return AnimatedOpacity(
-      opacity: _currentStep == 0 ? 1.0 : 0.0,
-      duration: Duration(milliseconds: 500),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            BubbleHeader(text: "What's up?"),
-            BubbleTextField(
-              controller: textController,
-            ),
-            BubbleButton(
-              text: "Next",
-              isDisabled: textController.text.isEmpty,
-              onClick: () {
-                viewModel.addTrigger();
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          BubbleHeader(text: "What's up?"),
+          BubbleTextField(
+            onSubmitted: () {
+              viewModel.addTrigger();
+              setState(() {
                 _currentStep = 1;
-              },
-            ),
-          ]),
-    );
+              });
+            },
+            controller: textController,
+          ),
+          BubbleButton(
+            text: "Next",
+            isDisabled: textController.text.isEmpty,
+            onClick: () {
+              viewModel.addTrigger();
+              setState(() {
+                _currentStep = 1;
+              });
+            },
+          ),
+        ]);
   }
 
   Widget _addReasonsStep(_ViewModel viewModel) {
-    return AnimatedOpacity(
-      opacity: _currentStep == 1 ? 1.0 : 0.0,
-      duration: Duration(milliseconds: 500),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            BubbleHeader(text: "What might happen?"),
-            BubbleTextField(
-              controller: reasonTextController,
-            ),
-            BubbleButton(
-              text: "Ok",
-              isDisabled: textController.text.isEmpty,
-              onClick: () {
-                viewModel.addReason();
-              },
-            ),
-          ]),
-    );
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          BubbleHeader(text: "What might happen?"),
+          BubbleTextField(
+            onSubmitted: () {
+              viewModel.addReason();
+            },
+            controller: reasonTextController,
+          ),
+          BubbleButton(
+            text: "Ok",
+            isDisabled: textController.text.isEmpty,
+            onClick: () {
+              viewModel.addReason();
+            },
+          ),
+        ]);
   }
 }

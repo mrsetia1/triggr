@@ -30,7 +30,7 @@ class TriggerList extends StatelessWidget {
                         builder: (context) => DetailPage(trigger: trigger)));
               },
               title: Text(trigger.title),
-              subtitle: Text(trigger.content));
+              subtitle: Text(trigger.getProgress()));
         },
       ),
     );
