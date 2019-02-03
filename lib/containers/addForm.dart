@@ -39,12 +39,19 @@ class _AddFormState extends State<AddForm> {
       ..addListener(() {
         setState(() {});
       });
+
+    reasonTextController = TextEditingController()
+      ..addListener(() {
+        setState(() {});
+      });
+
     super.initState();
   }
 
   @override
   void dispose() {
     textController.dispose();
+    reasonTextController.dispose();
     super.dispose();
   }
 
@@ -52,10 +59,13 @@ class _AddFormState extends State<AddForm> {
   Widget build(BuildContext context) {
     return new StoreConnector<TriggerState, _ViewModel>(
         converter: (store) => new _ViewModel(
-            addReason: () => store.dispatch(new AddTriggerReasonAction(
-                store.state.activeTrigger.id, reasonTextController.text)),
+            addReason: () {
+                  store.dispatch(new AddTriggerReasonAction(
+                      store.state.activeTrigger.id, reasonTextController.text));
+                  widget.closeForm();
+                },
             addTrigger: () =>
-                store.dispatch(new addTriggerAndStoreAction(textController.text))),
+                store.dispatch(addTriggerAndStoreAction(textController.text))),
         builder: (context, viewModel) => new Form(
             key: _formKey,
             child: Padding(
@@ -111,7 +121,7 @@ class _AddFormState extends State<AddForm> {
           ),
           BubbleButton(
             text: "Ok",
-            isDisabled: textController.text.isEmpty,
+            isDisabled: reasonTextController.text.isEmpty,
             onClick: () {
               viewModel.addReason();
             },

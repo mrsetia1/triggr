@@ -1,6 +1,19 @@
 class Reason {
   String title;
-  bool active;
 
-  Reason(this.title, this.active);
+  @override
+  String toString() {
+    return this.title;
+  }
+
+  Reason(this.title);
+
+  Map<String, dynamic> toJson() =>
+      {
+        'title': title,
+      };
+
+  factory Reason.fromJson(Map<String, dynamic> json) {
+    return Reason(json['title']);
+  }
 }

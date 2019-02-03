@@ -25,7 +25,7 @@ TriggerState addTrigger(TriggerState state, AddTriggerAction action) {
 TriggerState addReason(TriggerState state, AddTriggerReasonAction action) {
   final trigger =
       state.triggers.firstWhere((trigger) => trigger.id == action.triggerId);
-  trigger.reasons.add(new Reason(action.reasonText, false));
+  trigger.reasons.add(new Reason(action.reasonText));
   return state;
 }
 

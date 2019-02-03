@@ -7,14 +7,15 @@ import 'dart:convert';
 import 'package:triggr/models/triggerState.dart';
 import 'package:triggr/models/trigger.dart';
 
-ThunkAction<TriggerState> addTriggerAndStoreAction =
-(Store<TriggerState> store) async {
-//  store.dispatch(AddTriggerAction(text));
-};
+ThunkAction<TriggerState> addTriggerAndStoreAction(String text) {
+  return (Store<TriggerState> store) async {
+    store.dispatch(AddTriggerAction(text));
+    store.dispatch(saveTriggersInLocalStore);
+  };
+}
 
 ThunkAction<TriggerState> saveTriggersInLocalStore =
-(Store<TriggerState> store) async {
-
+    (Store<TriggerState> store) async {
   List<Trigger> stateTriggers = store.state.triggers;
 
   var encodedList = jsonEncode(stateTriggers.map((t) => t.toJson()).toList());

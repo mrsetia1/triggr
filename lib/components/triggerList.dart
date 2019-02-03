@@ -31,7 +31,7 @@ class TriggerList extends StatelessWidget {
                         builder: (context) => DetailPage(trigger: trigger)));
               },
               title: Text(trigger.title),
-              subtitle: Text(trigger.getProgress()));
+              subtitle: Text(trigger.hasReasons() ? trigger.reasons[0].toString() : 'none'));
         },
       ),
     );
