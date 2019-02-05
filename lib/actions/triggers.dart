@@ -14,6 +14,13 @@ ThunkAction<TriggerState> addTriggerAndStoreAction(String text) {
   };
 }
 
+ThunkAction<TriggerState> addTriggerReasonAndStoreAction(String id, String text) {
+  return (Store<TriggerState> store) async {
+    store.dispatch(AddTriggerReasonAction(id, text));
+    store.dispatch(saveTriggersInLocalStore);
+  };
+}
+
 ThunkAction<TriggerState> saveTriggersInLocalStore =
     (Store<TriggerState> store) async {
   List<Trigger> stateTriggers = store.state.triggers;

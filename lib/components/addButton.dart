@@ -25,7 +25,7 @@ class _AddButtonState extends State<AddButton>
   @override
   void initState() {
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 750))
+        AnimationController(vsync: this, duration: Duration(milliseconds: 250))
           ..addListener(() {
             if (_animationController.isCompleted) {
               widget.toggleAddForm();
@@ -35,7 +35,7 @@ class _AddButtonState extends State<AddButton>
 
     buttonGrowAnimation = new CurvedAnimation(
       parent: _animationController,
-      curve: Curves.bounceIn,
+      curve: Curves.easeInOut,
     );
 
     buttonZoomOutAnimation = new Tween(

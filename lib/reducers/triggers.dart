@@ -17,7 +17,7 @@ TriggerState triggerReducer(TriggerState state, dynamic action) {
 
 TriggerState addTrigger(TriggerState state, AddTriggerAction action) {
   Trigger newTrigger =
-      new Trigger(new Uuid().v1(), action.text);
+      new Trigger(new Uuid().v1(), action.text, new List<Reason>());
   List<Trigger> triggers = List.from(state.triggers)..add(newTrigger);
   return state.copyWith(triggers: triggers, activeTrigger: newTrigger);
 }

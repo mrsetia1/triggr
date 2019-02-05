@@ -1,5 +1,4 @@
 import 'package:triggr/models/reason.dart';
-import 'package:uuid/uuid.dart';
 
 class Trigger {
   String id;
@@ -18,15 +17,17 @@ class Trigger {
       {
         'id': id,
         'title': title,
-//        'reasons': reasons
+        'reasons': reasons.map((r) => r.toJson()).toList()
       };
 
-  Trigger(this.id, this.title);
+  Trigger(this.id, this.title, this.reasons);
 
   factory Trigger.fromJson(Map<String, dynamic> json) {
-//    List<Reason> reasons = new List<Reason>();
-//    var foo = json['reasons'];
-//    json['reasons'].forEach((r) => reasons.add(new Reason(r)));
-    return Trigger(json['id'], json['title']);
+    var list = json['reasons'] as List;
+    List<Reason> reasons = new List<Reason>();
+    if (list != null) {
+      reasons = list.map((r) => Reason.fromJson(r)).toList();
+    }
+    return Trigger(json['id'], json['title'], reasons);
   }
 }

@@ -60,7 +60,7 @@ class _AddFormState extends State<AddForm> {
     return new StoreConnector<TriggerState, _ViewModel>(
         converter: (store) => new _ViewModel(
             addReason: () {
-                  store.dispatch(new AddTriggerReasonAction(
+                  store.dispatch(addTriggerReasonAndStoreAction(
                       store.state.activeTrigger.id, reasonTextController.text));
                   widget.closeForm();
                 },
